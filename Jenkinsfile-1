@@ -2,29 +2,13 @@ pipeline {
     agent any
     
     environment {
-        DOCKER_REGISTRY = "https://hub.docker.com/u/bhavya12390"
-        DOCKER_REPO = "bhavya12390"
-        DOCKER_TAG = "${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
     }
     
     stages {
         stage('Build') {
             steps {
-                sh "docker build -t ${DOCKER_REGISTRY}/${DOCKER_REPO}:${DOCKER_TAG} ."
-            }
-        }
-        
-        stage('Test') {
-            steps {
-                sh "docker run ${DOCKER_REGISTRY}/${DOCKER_REPO}:${DOCKER_TAG} /bin/sh -c 'your-test-command'"
-            }
-        }
-        
-        stage('Push') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'your-docker-creds-id', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                    sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD} ${DOCKER_REGISTRY}"
-                    sh "docker push ${DOCKER_REGISTRY}/${DOCKER_REPO}:${DOCKER_TAG}"
+                sh "docker build -t bhavya12390/mytestapp ."
                 }
             }
         }
