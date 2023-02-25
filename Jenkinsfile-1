@@ -9,7 +9,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh "docker build -t bhavya12390/mytestapp ."
-                }
+               
             }
         }
     }
