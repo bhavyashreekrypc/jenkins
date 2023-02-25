@@ -2,8 +2,8 @@ pipeline {
     agent any
     
     environment {
-        DOCKER_REGISTRY = "your-docker-registry.com"
-        DOCKER_REPO = "your-docker-repo"
+        DOCKER_REGISTRY = "https://hub.docker.com/u/bhavya12390"
+        DOCKER_REPO = "bhavya12390"
         DOCKER_TAG = "${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
     }
     
