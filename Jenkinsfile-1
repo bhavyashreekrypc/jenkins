@@ -1,13 +1,29 @@
 pipeline {
     agent any
-    
+    environment{
+    DOCKER_CREDENTIALS = credentials('dockerhub')
+    }
     
     stages {
         stage('Build') {
             steps {
-                sh "docker build -t bhavya12390/mytestapp ."
+                sh "docker build -t bhavya12390/mytestapp:$BUILD_NUMBER ."       
                
             }
         }
-    }
+        
+        stage('Login to DockerHub'){
+            steps{
+                sh echo '${DOCKER_CREDENTIALS_PSW} | docker login -u ${DOCKER_CREDENTIALS_USR}  --password-stdin'
+               }
+           }
+        stage(push){
+          steps{
+             sh 'docker push bhavya12390/mytestapp:$BUILD_NUMBER'
+          
+         }
+     }
+  } 
+   
 }
+
